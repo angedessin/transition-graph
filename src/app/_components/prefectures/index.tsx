@@ -9,12 +9,30 @@ type Props = {
   checkboxData: PrefecturesResponseListResultData[];
 };
 
+const BUTTON_DATA = [
+  { text: '人口' },
+  { text: '年少人口' },
+  { text: '生産年齢人口' },
+  { text: '老年人' },
+];
+
 const Prefectures = (props: Props) => {
   const { checkboxData } = props;
   const { onChange, checkedId } = usePrefectures();
   return (
     <section className={styles.container}>
       <h2 className={styles.title}>都道府県</h2>
+      <div className={styles.categoryList}>
+        {BUTTON_DATA.map((data, i) => (
+          <button
+            className={styles.categoryButton}
+            key={`category-button-${i}`}
+            data-index={i}
+          >
+            {data.text}
+          </button>
+        ))}
+      </div>
       <div className={styles.checkBoxList}>
         {checkboxData.map((data) => (
           <Checkbox

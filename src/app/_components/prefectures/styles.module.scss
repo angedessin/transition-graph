@@ -10,6 +10,24 @@
   font-weight: bold;
 }
 
+.categoryList {
+  display: flex;
+  gap: 0 1%;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.categoryButton {
+  background-color: #000;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  text-align: center;
+  width: 25%;
+}
+
 .checkBoxList {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
