@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { usePrefecturesList } from '@/repositories/hooks';
+import { usePrefecturesIdsState, usePrefecturesMutators } from '@global-states';
 
 import type { PrefecturesResponseListResultData } from '@/repositories/type';
 import type { ChangeEvent } from 'react';
@@ -14,9 +15,10 @@ export const usePrefectures = (): UsePrefectures => {
   // hooks --------------------------------------------------
   const { response } = usePrefecturesList();
 
-  // useState --------------------------------------------------
+  // global-state --------------------------------------------------
   // 選択された都道府県のIDを管理するためのstateを定義
-  const [checkedIds, setCheckedId] = useState<string[]>([]);
+  const checkedIds = usePrefecturesIdsState();
+  const { setPrefecturesAtomIds } = usePrefecturesMutators();
 
   // useCallback --------------------------------------------------
   /**
@@ -25,10 +27,11 @@ export const usePrefectures = (): UsePrefectures => {
   const onChange = useCallback(
     (event: ChangeEvent) => {
       const target = event.target as HTMLInputElement;
+      const currentId = target.id.replace('prefecture-', '');
       if (target.checked) {
-        setCheckedId([...checkedIds, target.id.replace('prefecture-', '')]);
+        setPrefecturesAtomIds([...checkedIds, currentId]);
       } else {
-        setCheckedId(checkedIds.filter((id) => id !== target.id));
+        setPrefecturesAtomIds(checkedIds.filter((id) => id !== currentId));
       }
     },
     [checkedIds]
