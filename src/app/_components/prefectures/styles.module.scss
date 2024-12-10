@@ -1,13 +1,16 @@
 @use 'abstracts/index' as *;
 
 .container {
+  padding: 16px;
   position: relative;
 }
 
 .title {
-  background: #000;
-  color: #fff;
+  font-size: 18px;
   font-weight: bold;
-  padding: 24px;
-  text-align: center;
+}
+
+.checkBoxList {
+  display: grid;
+  margin-top: 16px;
 }

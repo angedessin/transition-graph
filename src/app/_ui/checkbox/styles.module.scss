@@ -1,0 +1,17 @@
+@use 'abstracts/index' as *;
+
+.container {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  gap: 0 8px;
+}
+
+.checkBox {
+  appearance: auto;
+}
+
+.text {
+  font-size: 14px;
+  line-height: 1;
+}
