@@ -52,8 +52,8 @@
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@ui/*": ["./src/app/_ui/*"],
-      "@hooks/*": ["./src/app/_hooks/*"],
+      "@ui": ["./src/app/_ui"],
+      "@hooks": ["./src/app/_hooks"],
       "@config": ["./src/config"],
       "@global-states": ["./src/global-states"],
       "@libs": ["./src/libs"],
