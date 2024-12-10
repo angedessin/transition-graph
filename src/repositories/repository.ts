@@ -6,10 +6,10 @@ import axios from 'redaxios';
  */
 export const getRepository = <T>(params: T) =>
   axios.create({
-    baseURL: process.env.PUBLIC_API_URL as string,
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL as string,
     headers: {
-      'content-type': 'application/json',
-      'X-API-KEY': process.env.PUBLIC_X_API_KEY as string,
+      'X-API-KEY': process.env.NEXT_PUBLIC_X_API_KEY as string,
+      'Content-Type': 'application/json',
     },
     ...params,
   });
