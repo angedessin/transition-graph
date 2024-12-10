@@ -1,0 +1,78 @@
+name: Bug Report
+description: File a bug report
+title: "[Page名を入れてください]: "
+labels: ["bug", "triage"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 何が起こりましましたか？
+      description: 起こった現象を記入してください。必要ならスクリーンショットもお願いします。
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 再現手順
+      description: バグの再現方法を詳しく教えてください。
+      placeholder: |
+        ex.
+        1. ◯◯ ページへアクセス
+        2. スクロールを上下に高速に繰り返す
+        3. ◯◯ ボタンを連続クリック
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: 期待する動作
+      description: その機能がするべきはずの動作を教えてください。必要ならスクリーンショットもお願いします。
+      placeholder: ex. ファーストビューで ◯◯ の画像が画面中央に配置されている状態
+    validations:
+      required: false
+  - type: dropdown
+    id: os
+    attributes:
+      label: OS
+      description: どのOSで問題が発生していますか?
+      multiple: true
+      options:
+        - Mac OS
+        - Windows
+        - iOS
+        - iPad OS
+        - Android
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: ブラウザ
+      description: どのブラウザで問題が発生していますか?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+    validations:
+      required: false
+  - type: input
+    id: browsers_version
+    attributes:
+      label: ブラウザのバージョン
+      description: 表示されたバージョン情報をコピーしてください。
+      placeholder: ex. 114.0.5735.90（Official Build）（arm64）
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: 関連するログ出力
+      description: 関連するログ出力をコピーして貼り付けてください。これは自動的にコードにフォーマットされるため、バッククォートは必要ありません。
+  - type: textarea
+    id: other
+    attributes:
+      label: その他
+      description: 他にあればここに記載してください。

@@ -1,0 +1,67 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es2023",
+    "lib": ["dom", "esnext"],
+    /* JavaScriptファイルがコンパイルされることを許可する */
+    "allowJs": true,
+    /* 宣言ファイルの型チェックをスキップ */
+    "skipLibCheck": true,
+    /* 厳格な型チェック */
+    "strict": true,
+    /* 大文字小文字を区別するかどうか */
+    "forceConsistentCasingInFileNames": true,
+    /* すべてのインポートのための名前空間オブジェクトの作成により、CommonJSとESモジュール間の相互運用性を発行可能にします。 */
+    "esModuleInterop": true,
+    /* モジュール解決戦略を指定 */
+    "moduleResolution": "bundler",
+    /* JSONファイルから型の抽出・生成 */
+    "resolveJsonModule": true,
+    /* 各ファイルを別々のモジュールとしてトランスパイル */
+    "isolatedModules": true,
+    /* JSXのサポート */
+    "jsx": "preserve",
+    /* コメント削除 */
+    "removeComments": true,
+    /* ソースマップを作成 */
+    "sourceMap": true,
+    /* ES7デコレーターの実験的なサポートを有効 */
+    "experimentalDecorators": true,
+    /* デコレーターのための型メタデータの発行に対する実験的なサポートを有効 */
+    "emitDecoratorMetadata": true,
+    /* 未使用のローカル変数に関するエラーを報告 */
+    "noUnusedLocals": true,
+    /* 'ES5'または'ES3'を対象とした場合に、'for-of'、スプレッド、およびデストラクチャリングにおけるイテラブルの完全なサポートを提供 */
+    "downlevelIteration": true,
+    /* 厳格モードで解析し、各ソースファイルに対して"use strict"を出力し */
+    "alwaysStrict": true,
+    /* 同じファイルへの大文字小文字が一貫しない参照を禁止 */
+    "noUncheckedIndexedAccess": true,
+    /* オプショナルなプロパティタイプをundefinedを追加するのではなく、書かれた通りに解釈 */
+    "exactOptionalPropertyTypes": true,
+    /* 未使用のパラメーターに関するエラーを報告 */
+    "noUnusedParameters": true,
+    /* メソッドオーバーライドにoverrideキーワードを必須にする */
+    "noImplicitOverride": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "noEmit": true,
+    "incremental": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@ui": ["./src/app/_ui"],
+      "@hooks": ["./src/app/_hooks"],
+      "@config": ["./src/config"],
+      "@global-states": ["./src/global-states"],
+      "@libs": ["./src/libs"],
+      "@repositories": ["./src/repositories"],
+      "@utils": ["./src/utils"],
+      "@features": ["./src/features"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

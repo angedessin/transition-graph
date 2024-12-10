@@ -1,0 +1,60 @@
+@use 'variables' as *;
+@use 'functions' as *;
+@use 'sass:math';
+@use 'sass:map';
+@use 'sass:string';
+@use 'sass:list';
+
+// ブレイクポイントのmixin
+@mixin mq($size) {
+  @if map-has-key($breakpoints, $size) {
+    @media (#{map-get($breakpoints, $size)} < width) {
+      @content;
+    }
+  } @else {
+    // マップ型で定義されていない値が呼び出された時はエラーを返す
+    @error '指定されたブレークポイントは定義されていません。' + '指定できるブレークポイントは次のとおりです。 -> #{map-keys($breakpoints)}';
+  }
+}
+
+@mixin mq-direction($size) {
+  @if map-has-key($breakpoints-direction, $size) {
+    /* stylelint-disable-next-line media-query-no-invalid */
+    @media #{inspect(map-get($breakpoints-direction, $size))} {
+      @content;
+    }
+  } @else {
+    // マップ型で定義されていない値が呼び出された時はエラーを返す
+    @error '指定されたブレークポイントは定義されていません。' + '指定できるブレークポイントは次のとおりです。 -> #{map-keys($breakpoints)}';
+  }
+}
+
+// hover用のmixin
+@mixin hover() {
+  &:focus-visible {
+    @content;
+  }
+
+  @media (any-hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+// アニメーションパフォーマンスの向上
+@mixin gpu {
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+
+  .safari & {
+    perspective: none;
+  }
+}
+
+// インラインsvgの余白を削除
+@mixin remove-inline-svg-margin {
+  font-size: 0;
+  line-height: 0;
+}

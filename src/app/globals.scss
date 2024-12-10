@@ -1,0 +1,80 @@
+@use 'abstracts/index' as *;
+
+*,
+*::before,
+*::after {
+  font-feature-settings: 'palt';
+  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  height: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, Verdana, Roboto,
+    'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', '游ゴシック',
+    'Yu Gothic', '游ゴシック体', YuGothic, 'Meiryo UI', 'メイリオ', Meiryo,
+    'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+  height: 100%;
+  line-height: 1.6;
+  width: 100%;
+}
+
+img {
+  height: auto;
+  vertical-align: top;
+  width: 100%;
+}
+
+button {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+}
+
+input[type='text'] {
+  background: none;
+  border-radius: 0;
+  outline: none;
+}
+
+a {
+  -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+  text-decoration: none;
+}
+
+li {
+  list-style-type: '';
+  padding: unset;
+}
+
+:where(button, [type='button'], [type='reset'], [type='submit']) {
+  touch-action: manipulation;
+}
+
+:where(
+  :any-link,
+  button,
+  [type='button'],
+  [type='reset'],
+  [type='submit'],
+  label[for],
+  select,
+  summary,
+  [role='tab'],
+  [role='button']
+) {
+  cursor: pointer;
+}
+
+// jotai
+.internal-jotai-devtools-trigger-button {
+  img {
+    width: auto;
+  }
+}

@@ -1,0 +1,57 @@
+name: Feature Request
+description: Feature request
+title: "[Page名を入れてください]: "
+labels: ["enhancement"]
+body:
+  - type: input
+    id: time
+    attributes:
+      label: 期限
+      description: いつまでに必要ですか？
+      placeholder: ex. 2023/06/06
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: 概要
+      description: なんのための機能が欲しいか簡潔に書いてください。
+      placeholder: ex. ロードに時間がかかるのでローディング画面を作成したい
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: 該当ページ
+      description: どのページ or 機能に追加したいですか？
+      placeholder: ex. TOPページ
+    validations:
+      required: true
+  - type: textarea
+    id: background
+    attributes:
+      label: 背景と目的
+      description: なぜその機能が必要になりましたか？
+      placeholder: ex. 当初の予定よりサイトの容量が重く、ローディングに時間がかかるため、ユーザーの心理負担軽減のため。
+    validations:
+      required: false
+  - type: textarea
+    id: specification
+    attributes:
+      label: 仕様
+      description: 機能の仕様を完結に書いてください。
+      placeholder: |
+        ex.
+        1. ◯◯ ページへアクセス
+        2. ローディング画面表示
+        3. 動画・画像のプリロード処理
+        4. ロード完了後ページの表示
+    validations:
+      required: true
+  - type: textarea
+    id: reference
+    attributes:
+      label: 参考
+      description: 参考資料があれば記入してください。
+    validations:
+      required: false
