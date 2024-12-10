@@ -14,13 +14,13 @@ import type {
 export const PrefecturesApi = {
   list(): PrefecturesResponseList {
     const repository = getRepository({});
-    return repository.post<PrefecturesResponseListData>('/api/v1/prefectures');
+    return repository.get<PrefecturesResponseListData>('/api/v1/prefectures');
   },
   detail(params: TPrefecturesDetailParams): PrefecturesResponseDetail {
     const repository = getRepository({});
-    return repository.post<PrefecturesResponseDetailData>(
+    return repository.get<PrefecturesResponseDetailData>(
       '/api/v1/population/composition',
-      params
+      { params }
     );
   },
 };
