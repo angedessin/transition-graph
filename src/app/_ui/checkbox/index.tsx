@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 
 type Props = {
   id: string;
+  isChecked: boolean;
   name: string;
   onChange: (event: ChangeEvent) => void;
   text: string;
@@ -11,7 +12,7 @@ type Props = {
 };
 
 const Checkbox = (props: Props) => {
-  const { type, id, name, text, onChange } = props;
+  const { type, id, name, text, onChange, isChecked } = props;
   const checkboxId = `${type}-${id}`;
   return (
     <label id={checkboxId} className={styles.container}>
@@ -21,6 +22,7 @@ const Checkbox = (props: Props) => {
         type="checkbox"
         id={checkboxId}
         name={name}
+        checked={isChecked}
       />
       <span className={styles.text}>{text}</span>
     </label>

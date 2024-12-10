@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import {
   CartesianGrid,
@@ -12,15 +10,17 @@ import {
   YAxis,
 } from 'recharts';
 
-import { DUMMY_PREFECTURES_DATA } from '@/app/_components/graph/data';
+import { useGraph } from '@/app/_components/graph/hook';
 
 import { AXIS_CONFIG, TOOLTIP_CONFIG } from './config';
 
 import type { PrefecturesData } from './type';
+import type { UseGraph } from '@/app/_components/graph/hook';
 
 import styles from './styles.module.scss';
 
 const Graph = () => {
+  const { graphData }: UseGraph = useGraph();
   return (
     <div className={styles.container}>
       <ResponsiveContainer width="100%" height="100%">
@@ -44,7 +44,7 @@ const Graph = () => {
           <YAxis dataKey="value" {...AXIS_CONFIG} />
           <Tooltip {...TOOLTIP_CONFIG} />
           <Legend />
-          {DUMMY_PREFECTURES_DATA.map((value: PrefecturesData) => {
+          {graphData.map((value: PrefecturesData) => {
             const { label, color, detail } = value;
             return (
               <Line

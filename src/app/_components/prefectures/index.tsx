@@ -11,7 +11,7 @@ type Props = {
 
 const Prefectures = (props: Props) => {
   const { checkboxData } = props;
-  const { onChange } = usePrefectures();
+  const { onChange, checkedId } = usePrefectures();
   return (
     <section className={styles.container}>
       <h2 className={styles.title}>都道府県</h2>
@@ -25,6 +25,7 @@ const Prefectures = (props: Props) => {
               name={data.prefName}
               text={data.prefName}
               onChange={onChange}
+              isChecked={checkedId.includes(data.prefCode)}
             />
           ))}
         </li>

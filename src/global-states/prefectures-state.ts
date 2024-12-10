@@ -2,36 +2,33 @@ import { atom } from 'jotai';
 import { useAtomValue, useSetAtom } from 'jotai/index';
 import { useCallback } from 'react';
 
-export type PrefectureAtomId = {
-  id: string;
-  label: string;
-};
-export type UsePrefecturesMutators = {
-  setPrefecturesAtomIds: (ids: PrefectureAtomId[]) => void;
+import type { PrefecturesData } from '@/app/_components/graph/type';
+
+export type UseGraphMutators = {
+  setGraphData: (data: PrefecturesData[]) => void;
 };
 
 // atom
-const prefecturesAtomIds = atom<PrefectureAtomId[]>([]);
-prefecturesAtomIds.debugLabel = 'prefecturesAtomIds';
+const graphDataAtom = atom<PrefecturesData[]>([]);
+graphDataAtom.debugLabel = 'graphDataAtom';
 
-// mutators
-export const usePrefecturesMutators = (): UsePrefecturesMutators => {
-  const setStateIds = useSetAtom(prefecturesAtomIds);
+export const useGraphMutators = (): UseGraphMutators => {
+  const setState = useSetAtom(graphDataAtom);
 
   /**
-   * 選択された都道府県のIDを更新
+   * グラフのデータを更新
    */
-  const setPrefecturesAtomIds = useCallback(
-    (ids: PrefectureAtomId[]) => {
-      setStateIds(ids);
+  const setGraphData = useCallback(
+    (data: PrefecturesData[]) => {
+      setState(data.sort((a, b) => a.prefCode - b.prefCode));
     },
-    [setStateIds]
+    [setState]
   );
 
-  return { setPrefecturesAtomIds };
+  return { setGraphData };
 };
 
 // value
-export const usePrefecturesIdsState = (): PrefectureAtomId[] => {
-  return useAtomValue(prefecturesAtomIds);
+export const useGraphsDataState = (): PrefecturesData[] => {
+  return useAtomValue(graphDataAtom);
 };
