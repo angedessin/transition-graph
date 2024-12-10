@@ -28,10 +28,13 @@ export const usePrefectures = (): UsePrefectures => {
     (event: ChangeEvent) => {
       const target = event.target as HTMLInputElement;
       const currentId = target.id.replace('prefecture-', '');
+      const label = target.name;
       if (target.checked) {
-        setPrefecturesAtomIds([...checkedIds, currentId]);
+        setPrefecturesAtomIds([...checkedIds, { label, id: currentId }]);
       } else {
-        setPrefecturesAtomIds(checkedIds.filter((id) => id !== currentId));
+        setPrefecturesAtomIds(
+          checkedIds.filter((data) => data.id !== currentId)
+        );
       }
     },
     [checkedIds]

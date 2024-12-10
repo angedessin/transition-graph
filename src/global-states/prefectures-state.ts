@@ -2,12 +2,16 @@ import { atom } from 'jotai';
 import { useAtomValue, useSetAtom } from 'jotai/index';
 import { useCallback } from 'react';
 
+export type PrefectureAtomId = {
+  id: string;
+  label: string;
+};
 export type UsePrefecturesMutators = {
-  setPrefecturesAtomIds: (ids: string[]) => void;
+  setPrefecturesAtomIds: (ids: PrefectureAtomId[]) => void;
 };
 
 // atom
-const prefecturesAtomIds = atom<string[]>([]);
+const prefecturesAtomIds = atom<PrefectureAtomId[]>([]);
 prefecturesAtomIds.debugLabel = 'prefecturesAtomIds';
 
 // mutators
@@ -18,7 +22,7 @@ export const usePrefecturesMutators = (): UsePrefecturesMutators => {
    * 選択された都道府県のIDを更新
    */
   const setPrefecturesAtomIds = useCallback(
-    (ids: string[]) => {
+    (ids: PrefectureAtomId[]) => {
       setStateIds(ids);
     },
     [setStateIds]
@@ -28,6 +32,6 @@ export const usePrefecturesMutators = (): UsePrefecturesMutators => {
 };
 
 // value
-export const usePrefecturesIdsState = (): string[] => {
+export const usePrefecturesIdsState = (): PrefectureAtomId[] => {
   return useAtomValue(prefecturesAtomIds);
 };
