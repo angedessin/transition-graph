@@ -5,7 +5,7 @@ import { Checkbox } from '@ui';
 import styles from './styles.module.scss';
 
 const Prefectures = () => {
-  const { checkboxData } = usePrefectures();
+  const { checkboxData, onChange } = usePrefectures();
   return (
     <section className={styles.container}>
       <h2 className={styles.title}>都道府県</h2>
@@ -18,6 +18,7 @@ const Prefectures = () => {
               id={String(data.prefCode)}
               name={data.prefName}
               text={data.prefName}
+              onChange={onChange}
             />
           ))}
         </li>
