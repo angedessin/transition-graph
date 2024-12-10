@@ -19,7 +19,7 @@ export const PrefecturesApi = {
   detail(params: TPrefecturesDetailParams): PrefecturesResponseDetail {
     const repository = getRepository({});
     return repository.get<PrefecturesResponseDetailData>(
-      '/api/v1/population/composition',
+      '/api/v1/population/composition/perYear',
       { params }
     );
   },
