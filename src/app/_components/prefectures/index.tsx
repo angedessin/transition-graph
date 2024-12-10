@@ -18,7 +18,8 @@ const BUTTON_DATA = [
 
 const Prefectures = (props: Props) => {
   const { checkboxData } = props;
-  const { onChange, checkedId } = usePrefectures();
+  const { onChange, checkedId, onClickCategoryButton, currentCategory } =
+    usePrefectures();
   return (
     <section className={styles.container}>
       <h2 className={styles.title}>都道府県</h2>
@@ -28,6 +29,8 @@ const Prefectures = (props: Props) => {
             className={styles.categoryButton}
             key={`category-button-${i}`}
             data-index={i}
+            data-is-selected={i === currentCategory}
+            onClick={onClickCategoryButton}
           >
             {data.text}
           </button>
@@ -36,6 +39,7 @@ const Prefectures = (props: Props) => {
       <div className={styles.checkBoxList}>
         {checkboxData.map((data) => (
           <Checkbox
+            key={data.prefCode}
             type="prefecture"
             id={String(data.prefCode)}
             name={data.prefName}

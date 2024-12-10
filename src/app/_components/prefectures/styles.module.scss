@@ -26,6 +26,10 @@
   padding-top: 10px;
   text-align: center;
   width: 25%;
+
+  &[data-is-selected='true'] {
+    opacity: 0.5;
+  }
 }
 
 .checkBoxList {

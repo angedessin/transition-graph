@@ -1,4 +1,5 @@
 type PrefecturesDetailData = {
+  rate: number;
   value: number;
   year: number;
 };

@@ -4,13 +4,23 @@ import { usePrefecturesDetail } from '@/repositories/hooks';
 import { useGraphMutators, useGraphsDataState } from '@global-states';
 
 import type { PrefecturesData } from '@/app/_components/graph/type';
+import type { PrefecturesResponseResultData } from '@/repositories/type';
 import type { UseGraphMutators } from '@global-states';
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, MouseEvent } from 'react';
 
 export type UsePrefectures = {
   checkedId: number[];
+  currentCategory: number;
   isLoading: boolean;
   onChange: (event: ChangeEvent) => void;
+  onClickCategoryButton: (event: MouseEvent<HTMLButtonElement>) => void;
+};
+
+type AllPopulationData = {
+  color: string;
+  data: PrefecturesResponseResultData[][];
+  label: string;
+  prefCode: number;
 };
 
 export const usePrefectures = (): UsePrefectures => {
@@ -30,14 +40,53 @@ export const usePrefectures = (): UsePrefectures => {
   const prefecturesDetailDataRef = useRef<PrefecturesData[]>(
     prefecturesDetailData
   );
-  const [checkedId, setCheckedId] = useState<number[]>([]);
   prefecturesDetailDataRef.current = prefecturesDetailData;
+
+  const [checkedId, setCheckedId] = useState<number[]>([]);
+
+  const [currentCategory, setCurrentCategory] = useState<number>(0);
+  const currentCategoryRef = useRef<number>(currentCategory);
+  currentCategoryRef.current = currentCategory;
+
+  const [allPopulationData, setAllPopulationData] = useState<
+    AllPopulationData[]
+  >([]);
+  const allPopulationDataRef = useRef<AllPopulationData[]>(allPopulationData);
+  allPopulationDataRef.current = allPopulationData;
 
   // useRef --------------------------------------------------
   const currentLabelRef = useRef<string>('');
   const prefCodeRef = useRef<number>(-1);
 
   // useCallback --------------------------------------------------
+  const onClickCategoryButton = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      const target = event.target as HTMLButtonElement;
+      const index = Number(target.dataset.index);
+      setCurrentCategory(index);
+
+      // graphDataRefのprefCodeを取得する
+      const code: number[] = graphDataRef.current.map((data) => data.prefCode);
+      // codeに該当するallPopulationDataRefをデータを取得
+      const selectedData = allPopulationDataRef.current.filter((data) =>
+        code.includes(data.prefCode)
+      );
+
+      const data: PrefecturesData[] = selectedData.map((populationData) => {
+        const { label, prefCode, color, data } = populationData;
+        const detail = data[index];
+        return {
+          label: label,
+          color: color,
+          detail: typeof detail !== 'undefined' ? detail : [],
+          prefCode,
+        };
+      });
+      setGraphData(data);
+    },
+    []
+  );
+
   /**
    * 都道府県のチェックボックスが変更された際の処理
    */
@@ -78,24 +127,54 @@ export const usePrefectures = (): UsePrefectures => {
 
   useEffect(() => {
     if (response && response.result) {
-      const resultData = response.result.data[0]?.data;
-      if (typeof resultData === 'undefined') {
-        return;
-      }
+      // 人口
+      const populationData = response.result.data[0]?.data;
+      const juvenilePopulationData = response.result.data[1]?.data;
+      const workingAgePopulationData = response.result.data[2]?.data;
+      const elderlyPopulationData = response.result.data[3]?.data;
 
-      const data = [
-        ...prefecturesDetailDataRef.current,
-        {
+      if (
+        typeof populationData !== 'undefined' &&
+        typeof juvenilePopulationData !== 'undefined' &&
+        typeof workingAgePopulationData !== 'undefined' &&
+        typeof elderlyPopulationData !== 'undefined'
+      ) {
+        const currentAllData = {
           label: currentLabelRef.current,
-          color: '#8884d8',
-          detail: resultData,
           prefCode: prefCodeRef.current,
-        },
-      ];
-      setPrefecturesDetailData(data);
-      setGraphData(data);
+          color: '#8884d8',
+          data: [
+            populationData,
+            juvenilePopulationData,
+            workingAgePopulationData,
+            elderlyPopulationData,
+          ],
+        };
+        setAllPopulationData([...allPopulationDataRef.current, currentAllData]);
+
+        const detail = currentAllData.data[currentCategoryRef.current];
+        if (typeof detail !== 'undefined') {
+          const data = [
+            ...prefecturesDetailDataRef.current,
+            {
+              label: currentAllData.label,
+              color: currentAllData.color,
+              detail,
+              prefCode: currentAllData.prefCode,
+            },
+          ];
+          setPrefecturesDetailData(data);
+          setGraphData(data);
+        }
+      }
     }
   }, [response]);
 
-  return { onChange, isLoading, checkedId };
+  return {
+    onChange,
+    isLoading,
+    checkedId,
+    onClickCategoryButton,
+    currentCategory,
+  };
 };

@@ -12,12 +12,18 @@ export type PrefecturesResponseListData = {
 };
 
 // 都道府県詳細のAPIレスポンスデータ型
+export type PrefecturesResponseResultData = {
+  rate: number;
+  value: number;
+  year: number;
+};
+
 export type PrefecturesResponseDetailData = {
   message: string;
   result: {
     boundaryYear: number;
     data: {
-      data: { rate: number; value: number; year: number }[];
+      data: PrefecturesResponseResultData[];
       label: string;
     }[];
   };
