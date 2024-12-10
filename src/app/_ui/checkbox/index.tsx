@@ -4,13 +4,20 @@ type Props = {
   id: string;
   name: string;
   text: string;
+  type: string;
 };
 
 const Checkbox = (props: Props) => {
-  const { id, name, text } = props;
+  const { type, id, name, text } = props;
+  const checkboxId = `${type}-${id}`;
   return (
-    <label id="checkbox1" className={styles.container}>
-      <input className={styles.checkBox} type="checkbox" id={id} name={name} />
+    <label id={checkboxId} className={styles.container}>
+      <input
+        className={styles.checkBox}
+        type="checkbox"
+        id={checkboxId}
+        name={name}
+      />
       <span className={styles.text}>{text}</span>
     </label>
   );
