@@ -1,9 +1,14 @@
 import type { Response } from 'redaxios';
 
 // 都道府県一覧のAPIレスポンスデータ型
+export type PrefecturesResponseListResultData = {
+  prefCode: number;
+  prefName: string;
+};
+
 export type PrefecturesResponseListData = {
   message: string;
-  result: { prefCode: number; prefName: string }[];
+  result: PrefecturesResponseListResultData[];
 };
 
 // 都道府県詳細のAPIレスポンスデータ型
