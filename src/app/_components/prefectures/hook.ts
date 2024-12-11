@@ -33,12 +33,6 @@ export const usePrefectures = (): UsePrefectures => {
   const { response, setParams, isLoading } = usePopulationComposition();
 
   // useState --------------------------------------------------
-  const [prefecturesDetailData, setPrefecturesDetailData] = useState<
-    GraphData[]
-  >([]);
-  const prefecturesDetailDataRef = useRef<GraphData[]>(prefecturesDetailData);
-  prefecturesDetailDataRef.current = prefecturesDetailData;
-
   const [checkedId, setCheckedId] = useState<number[]>([]);
 
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState<number>(0);
@@ -98,7 +92,9 @@ export const usePrefectures = (): UsePrefectures => {
       const target = event.target as HTMLInputElement;
       prefCodeRef.current = Number(target.id.replace('prefecture-', ''));
       currentLabelRef.current = target.name;
-      const isExist = prefecturesDetailDataRef.current.some(
+
+      // populationCompositionLoadedDataRefにcurrentLabelRef.currentが存在するか
+      const isExist = populationCompositionLoadedDataRef.current.some(
         (data) => data.label === currentLabelRef.current
       );
 
@@ -107,10 +103,23 @@ export const usePrefectures = (): UsePrefectures => {
         if (!isExist) {
           setParams({ prefCode: prefCodeRef.current });
         } else {
-          const data = prefecturesDetailDataRef.current.filter(
-            (data) => data.prefCode === prefCodeRef.current
-          );
-          setGraphData([...graphDataRef.current, ...data]);
+          const loadedData = populationCompositionLoadedDataRef.current
+            .filter((loadedData) => loadedData.prefCode === prefCodeRef.current)
+            .map((loadedData) => {
+              const { label, prefCode, color, data } = loadedData;
+              const detail =
+                typeof data[currentCategoryIndex] !== 'undefined'
+                  ? data[currentCategoryIndex]
+                  : [];
+              return {
+                label: label,
+                prefCode: prefCode,
+                color: color,
+                detail,
+              };
+            });
+
+          setGraphData([...graphDataRef.current, ...loadedData]);
         }
       } else {
         setCheckedId(checkedId.filter((id) => id !== prefCodeRef.current));
@@ -138,7 +147,7 @@ export const usePrefectures = (): UsePrefectures => {
         typeof workingAgePopulationData !== 'undefined' &&
         typeof elderlyPopulationData !== 'undefined'
       ) {
-        const currentAllData = {
+        const loadedData = {
           label: currentLabelRef.current,
           prefCode: prefCodeRef.current,
           color: '#8884d8',
@@ -151,21 +160,21 @@ export const usePrefectures = (): UsePrefectures => {
         };
         setPopulationCompositionLoadedData([
           ...populationCompositionLoadedDataRef.current,
-          currentAllData,
+          loadedData,
         ]);
 
-        const detail = currentAllData.data[currentCategoryRef.current];
+        const { label, color, prefCode } = loadedData;
+        const detail = loadedData.data[currentCategoryRef.current];
         if (typeof detail !== 'undefined') {
           const data = [
-            ...prefecturesDetailDataRef.current,
+            ...graphDataRef.current,
             {
-              label: currentAllData.label,
-              color: currentAllData.color,
+              label,
+              color,
               detail,
-              prefCode: currentAllData.prefCode,
+              prefCode,
             },
           ];
-          setPrefecturesDetailData(data);
           setGraphData(data);
         }
       }
