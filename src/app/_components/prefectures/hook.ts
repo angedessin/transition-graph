@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { usePrefecturesDetail } from '@/repositories/hooks';
+import { usePopulationComposition } from '@/repositories/hooks';
 import { useGraphMutators, useGraphsDataState } from '@global-states';
 
-import type { PrefecturesResponseResultData } from '@/repositories/type';
+import type { PopulationCompositionResultData } from '@/repositories/type';
 import type { UseGraphMutators, GraphData } from '@global-states';
 import type { ChangeEvent, MouseEvent } from 'react';
 
@@ -17,7 +17,7 @@ export type UsePrefectures = {
 
 type AllPopulationData = {
   color: string;
-  data: PrefecturesResponseResultData[][];
+  data: PopulationCompositionResultData[][];
   label: string;
   prefCode: number;
 };
@@ -30,7 +30,7 @@ export const usePrefectures = (): UsePrefectures => {
   const { setGraphData }: UseGraphMutators = useGraphMutators();
 
   // hooks --------------------------------------------------
-  const { response, setParams, isLoading } = usePrefecturesDetail();
+  const { response, setParams, isLoading } = usePopulationComposition();
 
   // useState --------------------------------------------------
   const [prefecturesDetailData, setPrefecturesDetailData] = useState<

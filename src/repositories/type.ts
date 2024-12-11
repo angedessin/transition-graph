@@ -1,45 +1,43 @@
 import type { Response } from 'redaxios';
 
 // 都道府県一覧のAPIレスポンスデータ型
-export type PrefecturesResponseListResultData = {
+export type PrefecturesResultData = {
   prefCode: number;
   prefName: string;
 };
 
-export type PrefecturesResponseListData = {
+export type PrefecturesData = {
   message: string;
-  result: PrefecturesResponseListResultData[];
+  result: PrefecturesResultData[];
 };
 
 // 都道府県詳細のAPIレスポンスデータ型
-export type PrefecturesResponseResultData = {
+export type PopulationCompositionResultData = {
   rate: number;
   value: number;
   year: number;
 };
 
-export type PrefecturesResponseDetailData = {
+export type PopulationCompositionData = {
   message: string;
   result: {
     boundaryYear: number;
     data: {
-      data: PrefecturesResponseResultData[];
+      data: PopulationCompositionResultData[];
       label: string;
     }[];
   };
 };
 
 // 都道府県一覧のaxiosでのレスポンス型
-export type PrefecturesResponseList = Promise<
-  Response<PrefecturesResponseListData>
->;
+export type PrefecturesDataResponse = Promise<Response<PrefecturesData>>;
 
 // 都道府県詳細のaxiosでのレスポンス型
-export type PrefecturesResponseDetail = Promise<
-  Response<PrefecturesResponseDetailData>
+export type PopulationCompositionResponse = Promise<
+  Response<PopulationCompositionData>
 >;
 
 // 都道府県詳細のパラメータ型
-export type TPrefecturesDetailParams = {
+export type PopulationCompositionParams = {
   prefCode: number;
 };

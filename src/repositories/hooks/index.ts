@@ -1,2 +1,2 @@
-export * from './use-prefectures-detail';
-export * from './use-prefectures-list';
+export * from './use-population-composition';
+export * from './use-prefectures';

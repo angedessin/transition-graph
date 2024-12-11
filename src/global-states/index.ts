@@ -1,2 +1,2 @@
 export * from './system-state';
-export * from './prefectures-state';
+export * from './graph-state';

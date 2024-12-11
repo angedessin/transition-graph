@@ -2,10 +2,10 @@ import { useMemo } from 'react';
 
 import { usePrefecturesList } from '@/repositories/hooks';
 
-import type { PrefecturesResponseListResultData } from '@/repositories/type';
+import type { PrefecturesResultData } from '@/repositories/type';
 
 export type UseContainer = {
-  checkboxData: PrefecturesResponseListResultData[];
+  checkboxData: PrefecturesResultData[];
 };
 
 export const useContainer = (): UseContainer => {
@@ -14,7 +14,7 @@ export const useContainer = (): UseContainer => {
 
   // useMemo --------------------------------------------------
   // チェックボックスに表示する都道府県のデータを取得
-  const checkboxData: PrefecturesResponseListResultData[] = useMemo(() => {
+  const checkboxData: PrefecturesResultData[] = useMemo(() => {
     if (!response) return [];
     return response.result;
   }, [response]);

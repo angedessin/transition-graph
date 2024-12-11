@@ -1,33 +1,36 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { HTTP_STATUS } from '@/repositories/config';
-import { PrefecturesApi } from '@/repositories/fetcher/prefectures';
+import { Api } from '@/repositories/fetcher';
 
 import type {
-  PrefecturesResponseDetailData,
-  TPrefecturesDetailParams,
+  PopulationCompositionData,
+  PopulationCompositionParams,
 } from '@/repositories/type';
 
-export type UsePrefecturesDetail = {
+export type UsePopulationComposition = {
   errors: string[] | null;
   hasError: boolean;
   isLoading: boolean;
-  response: PrefecturesResponseDetailData | null;
-  setParams: (params: TPrefecturesDetailParams) => void;
+  response: PopulationCompositionData | null;
+  setParams: (params: PopulationCompositionParams) => void;
 };
-export const usePrefecturesDetail = (): UsePrefecturesDetail => {
+export const usePopulationComposition = (): UsePopulationComposition => {
   // useState -----------------------------------------------
   // APIのローディング状態のstate
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // APIエラーのstate
   const [hasError, setHasError] = useState<boolean>(false);
   // APIレスポンスデータのstate
-  const [response, setResponse] =
-    useState<PrefecturesResponseDetailData | null>(null);
+  const [response, setResponse] = useState<PopulationCompositionData | null>(
+    null
+  );
   // APIエラーメッセージのstate
   const [apiErrors, setApiErrors] = useState<string[] | null>(null);
   // 都道府県詳細のパラメータのstate
-  const [params, setParams] = useState<TPrefecturesDetailParams | null>(null);
+  const [params, setParams] = useState<PopulationCompositionParams | null>(
+    null
+  );
 
   // useCallback --------------------------------------------
   /**
@@ -37,7 +40,7 @@ export const usePrefecturesDetail = (): UsePrefecturesDetail => {
     if (params === null) {
       return;
     }
-    const repository = PrefecturesApi.detail;
+    const repository = Api.populationComposition;
     setIsLoading(true);
     setHasError(false);
     try {

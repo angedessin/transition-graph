@@ -2,15 +2,11 @@ import { atom } from 'jotai';
 import { useAtomValue, useSetAtom } from 'jotai/index';
 import { useCallback } from 'react';
 
-export type GraphDetailData = {
-  rate: number;
-  value: number;
-  year: number;
-};
+import type { PopulationCompositionResultData } from '@/repositories/type';
 
 export type GraphData = {
   color: string;
-  detail: GraphDetailData[];
+  detail: PopulationCompositionResultData[];
   label: string;
   prefCode: number;
 };
