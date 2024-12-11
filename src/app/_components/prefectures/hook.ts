@@ -15,7 +15,7 @@ export type UsePrefectures = {
   onClickCategoryButton: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
-type AllPopulationData = {
+type PopulationCompositionLoadedData = {
   color: string;
   data: PopulationCompositionResultData[][];
   label: string;
@@ -45,11 +45,13 @@ export const usePrefectures = (): UsePrefectures => {
   const currentCategoryRef = useRef<number>(currentCategoryIndex);
   currentCategoryRef.current = currentCategoryIndex;
 
-  const [allPopulationData, setAllPopulationData] = useState<
-    AllPopulationData[]
-  >([]);
-  const allPopulationDataRef = useRef<AllPopulationData[]>(allPopulationData);
-  allPopulationDataRef.current = allPopulationData;
+  // APIから読み込み済みのデータ
+  const [populationCompositionLoadedData, setPopulationCompositionLoadedData] =
+    useState<PopulationCompositionLoadedData[]>([]);
+  const populationCompositionLoadedDataRef = useRef<
+    PopulationCompositionLoadedData[]
+  >(populationCompositionLoadedData);
+  populationCompositionLoadedDataRef.current = populationCompositionLoadedData;
 
   // useRef --------------------------------------------------
   const currentLabelRef = useRef<string>('');
@@ -65,8 +67,8 @@ export const usePrefectures = (): UsePrefectures => {
       // graphDataRefのprefCodeを取得する
       const code: number[] = graphDataRef.current.map((data) => data.prefCode);
       // codeに該当するallPopulationDataRefをデータを取得
-      const selectedData = allPopulationDataRef.current.filter((data) =>
-        code.includes(data.prefCode)
+      const selectedData = populationCompositionLoadedDataRef.current.filter(
+        (data) => code.includes(data.prefCode)
       );
 
       const data: GraphData[] = selectedData.map((populationData) => {
@@ -147,7 +149,10 @@ export const usePrefectures = (): UsePrefectures => {
             elderlyPopulationData,
           ],
         };
-        setAllPopulationData([...allPopulationDataRef.current, currentAllData]);
+        setPopulationCompositionLoadedData([
+          ...populationCompositionLoadedDataRef.current,
+          currentAllData,
+        ]);
 
         const detail = currentAllData.data[currentCategoryRef.current];
         if (typeof detail !== 'undefined') {
