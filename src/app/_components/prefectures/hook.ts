@@ -3,14 +3,13 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { usePrefecturesDetail } from '@/repositories/hooks';
 import { useGraphMutators, useGraphsDataState } from '@global-states';
 
-import type { PrefecturesData } from '@/app/_components/graph/type';
 import type { PrefecturesResponseResultData } from '@/repositories/type';
-import type { UseGraphMutators } from '@global-states';
+import type { UseGraphMutators, GraphData } from '@global-states';
 import type { ChangeEvent, MouseEvent } from 'react';
 
 export type UsePrefectures = {
   checkedId: number[];
-  currentCategory: number;
+  currentCategoryIndex: number;
   isLoading: boolean;
   onChange: (event: ChangeEvent) => void;
   onClickCategoryButton: (event: MouseEvent<HTMLButtonElement>) => void;
@@ -26,7 +25,7 @@ type AllPopulationData = {
 export const usePrefectures = (): UsePrefectures => {
   // global-state --------------------------------------------------
   const graphData = useGraphsDataState();
-  const graphDataRef = useRef<PrefecturesData[]>(graphData);
+  const graphDataRef = useRef<GraphData[]>(graphData);
   graphDataRef.current = graphData;
   const { setGraphData }: UseGraphMutators = useGraphMutators();
 
@@ -35,18 +34,16 @@ export const usePrefectures = (): UsePrefectures => {
 
   // useState --------------------------------------------------
   const [prefecturesDetailData, setPrefecturesDetailData] = useState<
-    PrefecturesData[]
+    GraphData[]
   >([]);
-  const prefecturesDetailDataRef = useRef<PrefecturesData[]>(
-    prefecturesDetailData
-  );
+  const prefecturesDetailDataRef = useRef<GraphData[]>(prefecturesDetailData);
   prefecturesDetailDataRef.current = prefecturesDetailData;
 
   const [checkedId, setCheckedId] = useState<number[]>([]);
 
-  const [currentCategory, setCurrentCategory] = useState<number>(0);
-  const currentCategoryRef = useRef<number>(currentCategory);
-  currentCategoryRef.current = currentCategory;
+  const [currentCategoryIndex, setCurrentCategoryIndex] = useState<number>(0);
+  const currentCategoryRef = useRef<number>(currentCategoryIndex);
+  currentCategoryRef.current = currentCategoryIndex;
 
   const [allPopulationData, setAllPopulationData] = useState<
     AllPopulationData[]
@@ -63,7 +60,7 @@ export const usePrefectures = (): UsePrefectures => {
     (event: MouseEvent<HTMLButtonElement>) => {
       const target = event.target as HTMLButtonElement;
       const index = Number(target.dataset.index);
-      setCurrentCategory(index);
+      setCurrentCategoryIndex(index);
 
       // graphDataRefのprefCodeを取得する
       const code: number[] = graphDataRef.current.map((data) => data.prefCode);
@@ -72,7 +69,7 @@ export const usePrefectures = (): UsePrefectures => {
         code.includes(data.prefCode)
       );
 
-      const data: PrefecturesData[] = selectedData.map((populationData) => {
+      const data: GraphData[] = selectedData.map((populationData) => {
         const { label, prefCode, color, data } = populationData;
         const detail = data[index];
         return {
@@ -175,6 +172,6 @@ export const usePrefectures = (): UsePrefectures => {
     isLoading,
     checkedId,
     onClickCategoryButton,
-    currentCategory,
+    currentCategoryIndex,
   };
 };

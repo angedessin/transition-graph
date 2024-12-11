@@ -2,14 +2,25 @@ import { atom } from 'jotai';
 import { useAtomValue, useSetAtom } from 'jotai/index';
 import { useCallback } from 'react';
 
-import type { PrefecturesData } from '@/app/_components/graph/type';
+export type GraphDetailData = {
+  rate: number;
+  value: number;
+  year: number;
+};
+
+export type GraphData = {
+  color: string;
+  detail: GraphDetailData[];
+  label: string;
+  prefCode: number;
+};
 
 export type UseGraphMutators = {
-  setGraphData: (data: PrefecturesData[]) => void;
+  setGraphData: (data: GraphData[]) => void;
 };
 
 // atom
-const graphDataAtom = atom<PrefecturesData[]>([]);
+const graphDataAtom = atom<GraphData[]>([]);
 graphDataAtom.debugLabel = 'graphDataAtom';
 
 export const useGraphMutators = (): UseGraphMutators => {
@@ -19,7 +30,7 @@ export const useGraphMutators = (): UseGraphMutators => {
    * グラフのデータを更新
    */
   const setGraphData = useCallback(
-    (data: PrefecturesData[]) => {
+    (data: GraphData[]) => {
       setState(data.sort((a, b) => a.prefCode - b.prefCode));
     },
     [setState]
@@ -29,6 +40,6 @@ export const useGraphMutators = (): UseGraphMutators => {
 };
 
 // value
-export const useGraphsDataState = (): PrefecturesData[] => {
+export const useGraphsDataState = (): GraphData[] => {
   return useAtomValue(graphDataAtom);
 };

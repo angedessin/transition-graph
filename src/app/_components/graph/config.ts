@@ -1,5 +1,4 @@
 // Rechartsの共通設定はここに記述する
-
 const GRAPH_FONT_SIZE = 10;
 export const AXIS_CONFIG = {
   tick: {

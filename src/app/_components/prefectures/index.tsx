@@ -18,7 +18,7 @@ const BUTTON_DATA = [
 
 const Prefectures = (props: Props) => {
   const { checkboxData } = props;
-  const { onChange, checkedId, onClickCategoryButton, currentCategory } =
+  const { onChange, checkedId, onClickCategoryButton, currentCategoryIndex } =
     usePrefectures();
   return (
     <section className={styles.container}>
@@ -29,7 +29,7 @@ const Prefectures = (props: Props) => {
             className={styles.categoryButton}
             key={`category-button-${i}`}
             data-index={i}
-            data-is-selected={i === currentCategory}
+            data-is-selected={i === currentCategoryIndex}
             onClick={onClickCategoryButton}
           >
             {data.text}

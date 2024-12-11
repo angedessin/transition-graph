@@ -1,10 +1,11 @@
 import { useGraphsDataState } from '@global-states';
 
-import type { PrefecturesData } from '@/app/_components/graph/type';
+import type { GraphData } from '@global-states';
 
 export type UseGraph = {
-  graphData: PrefecturesData[];
+  graphData: GraphData[];
 };
+
 export const useGraph = () => {
   const graphData = useGraphsDataState();
 
