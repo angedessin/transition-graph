@@ -3,6 +3,7 @@ import type { ChangeEvent } from 'react';
 import styles from './styles.module.scss';
 
 type Props = {
+  color: string;
   id: string;
   isChecked: boolean;
   name: string;
@@ -12,7 +13,7 @@ type Props = {
 };
 
 const Checkbox = (props: Props) => {
-  const { type, id, name, text, onChange, isChecked } = props;
+  const { type, id, name, text, onChange, isChecked, color } = props;
   const checkboxId = `${type}-${id}`;
   return (
     <label id={checkboxId} className={styles.container}>
@@ -25,6 +26,12 @@ const Checkbox = (props: Props) => {
         checked={isChecked}
       />
       <span className={styles.text}>{text}</span>
+      <span
+        className={styles.color}
+        style={{
+          backgroundColor: color,
+        }}
+      ></span>
     </label>
   );
 };

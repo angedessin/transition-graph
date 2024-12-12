@@ -38,3 +38,10 @@ export const getDataAttribute = (props: {
  */
 export const sleep = (ms: number): Promise<number> =>
   new Promise((resolve) => window.setTimeout(resolve, ms));
+
+/**
+ * ランダムなカラーコードを取得
+ */
+export const getColor = (): string => {
+  return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+};

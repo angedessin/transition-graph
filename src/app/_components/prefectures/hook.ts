@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { usePopulationComposition } from '@/repositories/hooks';
 import { useGraphMutators, useGraphsDataState } from '@global-states';
+import { getColor } from '@utils';
 
 import type { PopulationCompositionResultData } from '@/repositories/type';
 import type { UseGraphMutators, GraphData } from '@global-states';
@@ -22,7 +23,13 @@ type PopulationCompositionLoadedData = {
   prefCode: number;
 };
 
-export const usePrefectures = (): UsePrefectures => {
+type UsePrefecturesProps = {
+  colors: string[];
+};
+
+export const usePrefectures = (props: UsePrefecturesProps): UsePrefectures => {
+  const { colors } = props;
+
   // global-state --------------------------------------------------
   const graphData = useGraphsDataState();
   const graphDataRef = useRef<GraphData[]>(graphData);
@@ -141,16 +148,19 @@ export const usePrefectures = (): UsePrefectures => {
       const workingAgePopulationData = response.result.data[2]?.data;
       const elderlyPopulationData = response.result.data[3]?.data;
 
+      console.log(colors[prefCodeRef.current - 1]);
       if (
         typeof populationData !== 'undefined' &&
         typeof juvenilePopulationData !== 'undefined' &&
         typeof workingAgePopulationData !== 'undefined' &&
         typeof elderlyPopulationData !== 'undefined'
       ) {
+        const graphColor = colors[prefCodeRef.current - 1];
+
         const loadedData = {
           label: currentLabelRef.current,
           prefCode: prefCodeRef.current,
-          color: '#8884d8',
+          color: typeof graphColor === 'undefined' ? getColor() : graphColor,
           data: [
             populationData,
             juvenilePopulationData,

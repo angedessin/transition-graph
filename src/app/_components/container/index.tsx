@@ -13,8 +13,12 @@ const Container: NextPage = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>都道府県別の総人口推移グラフ</h1>
-      <Prefectures checkboxData={checkboxData} />
-      <Graph />
+      {checkboxData.length > 0 && (
+        <>
+          <Prefectures checkboxData={checkboxData} />
+          <Graph />
+        </>
+      )}
     </div>
   );
 };
