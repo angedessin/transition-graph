@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { usePrefecturesList } from '@/repositories/hooks';
 import { getColor } from '@utils';
@@ -11,11 +11,15 @@ export type CheckboxData = {
 
 export type UseContainer = {
   checkboxData: CheckboxData[];
+  isReadyContents: boolean;
 };
 
 export const useContainer = (): UseContainer => {
   // hooks --------------------------------------------------
   const { response } = usePrefecturesList();
+
+  // useState --------------------------------------------------
+  const [isReadyContents, setIsReadyContents] = useState<boolean>(false);
 
   // useMemo --------------------------------------------------
   // チェックボックスに表示する都道府県のデータを取得
@@ -29,7 +33,13 @@ export const useContainer = (): UseContainer => {
     });
   }, [response]);
 
-  console.log(response);
+  useEffect(() => {
+    if (checkboxData.length > 0) {
+      window.setTimeout(() => {
+        setIsReadyContents(true);
+      }, 500);
+    }
+  }, [response]);
 
-  return { checkboxData };
+  return { checkboxData, isReadyContents };
 };

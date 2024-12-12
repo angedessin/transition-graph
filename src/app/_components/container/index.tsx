@@ -9,17 +9,13 @@ import type { NextPage } from 'next';
 import styles from './styles.module.scss';
 
 const Container: NextPage = () => {
-  const { checkboxData }: UseContainer = useContainer();
+  const { checkboxData, isReadyContents }: UseContainer = useContainer();
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>都道府県別の総人口推移グラフ</h1>
-      <div className={styles.inner}>
-        {checkboxData.length > 0 && (
-          <>
-            <Prefectures checkboxData={checkboxData} />
-            <Graph />
-          </>
-        )}
+      <div className={styles.inner} data-is-ready={isReadyContents}>
+        <Prefectures checkboxData={checkboxData} />
+        <Graph />
       </div>
     </div>
   );

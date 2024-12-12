@@ -13,5 +13,13 @@
 }
 
 .inner {
+  opacity: 0;
   padding: 24px;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease-out-sine);
+
+  &[data-is-ready='true'] {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
