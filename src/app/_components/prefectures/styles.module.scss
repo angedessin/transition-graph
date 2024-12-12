@@ -38,3 +38,46 @@
   margin-top: 16px;
   row-gap: 10px;
 }
+
+.loading {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  transition: opacity 0.35s var(--ease-out-sine);
+  width: 100%;
+
+  &[data-is-oerable='false'] {
+    background-color: rgba(#000, 0.5);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.loadingText {
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+@keyframes loading {
+  to {
+    transform: rotate(0.5turn);
+  }
+}
+
+.loadingIcon {
+  animation: loading 1s infinite;
+  aspect-ratio: 1;
+  border: 8px solid;
+  border-color: #fff transparent;
+  border-radius: 50%;
+  width: 50px;
+}

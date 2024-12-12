@@ -19,10 +19,15 @@ const BUTTON_DATA = [
 
 const Prefectures = (props: Props) => {
   const { checkboxData } = props;
-  const { onChange, checkedId, onClickCategoryButton, currentCategoryIndex } =
-    usePrefectures({
-      colors: checkboxData.map((data) => data.color),
-    });
+  const {
+    onChange,
+    checkedId,
+    onClickCategoryButton,
+    currentCategoryIndex,
+    isOperable,
+  } = usePrefectures({
+    colors: checkboxData.map((data) => data.color),
+  });
 
   return (
     <section className={styles.container}>
@@ -58,6 +63,10 @@ const Prefectures = (props: Props) => {
             />
           );
         })}
+      </div>
+      <div className={styles.loading} data-is-oerable={isOperable}>
+        <div className={styles.loadingIcon} />
+        <p className={styles.loadingText}>データ取得中</p>
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { usePopulationComposition } from '@/repositories/hooks';
 import { useGraphMutators, useGraphsDataState } from '@global-states';
@@ -11,7 +11,7 @@ import type { ChangeEvent, MouseEvent } from 'react';
 export type UsePrefectures = {
   checkedId: number[];
   currentCategoryIndex: number;
-  isLoading: boolean;
+  isOperable: boolean;
   onChange: (event: ChangeEvent) => void;
   onClickCategoryButton: (event: MouseEvent<HTMLButtonElement>) => void;
 };
@@ -54,13 +54,24 @@ export const usePrefectures = (props: UsePrefecturesProps): UsePrefectures => {
   >(populationCompositionLoadedData);
   populationCompositionLoadedDataRef.current = populationCompositionLoadedData;
 
+  const [isSetGraphData, setIsSetGraphData] = useState<boolean>(true);
+
   // useRef --------------------------------------------------
   const currentLabelRef = useRef<string>('');
   const prefCodeRef = useRef<number>(-1);
 
+  // useMemo --------------------------------------------------
+  const isOperable = useMemo(() => {
+    return !isLoading && isSetGraphData;
+  }, [isLoading, isSetGraphData]);
+
   // useCallback --------------------------------------------------
   const onClickCategoryButton = useCallback(
     (event: MouseEvent<HTMLButtonElement>) => {
+      if (!isOperable) {
+        return;
+      }
+
       const target = event.target as HTMLButtonElement;
       const index = Number(target.dataset.index);
       setCurrentCategoryIndex(index);
@@ -84,7 +95,7 @@ export const usePrefectures = (props: UsePrefecturesProps): UsePrefectures => {
       });
       setGraphData(data);
     },
-    []
+    [isOperable]
   );
 
   /**
@@ -92,7 +103,7 @@ export const usePrefectures = (props: UsePrefecturesProps): UsePrefectures => {
    */
   const onChange = useCallback(
     (event: ChangeEvent) => {
-      if (isLoading) {
+      if (!isOperable) {
         return;
       }
 
@@ -106,6 +117,7 @@ export const usePrefectures = (props: UsePrefecturesProps): UsePrefectures => {
       );
 
       if (target.checked) {
+        setIsSetGraphData(false);
         setCheckedId([...checkedId, prefCodeRef.current]);
         if (!isExist) {
           setParams({ prefCode: prefCodeRef.current });
@@ -127,6 +139,7 @@ export const usePrefectures = (props: UsePrefecturesProps): UsePrefectures => {
             });
 
           setGraphData([...graphDataRef.current, ...loadedData]);
+          setIsSetGraphData(true);
         }
       } else {
         setCheckedId(checkedId.filter((id) => id !== prefCodeRef.current));
@@ -137,9 +150,10 @@ export const usePrefectures = (props: UsePrefecturesProps): UsePrefectures => {
         setGraphData(data);
       }
     },
-    [isLoading, checkedId]
+    [checkedId, isOperable]
   );
 
+  // useEffect --------------------------------------------------
   useEffect(() => {
     if (response && response.result) {
       // 人口
@@ -148,7 +162,6 @@ export const usePrefectures = (props: UsePrefecturesProps): UsePrefectures => {
       const workingAgePopulationData = response.result.data[2]?.data;
       const elderlyPopulationData = response.result.data[3]?.data;
 
-      console.log(colors[prefCodeRef.current - 1]);
       if (
         typeof populationData !== 'undefined' &&
         typeof juvenilePopulationData !== 'undefined' &&
@@ -187,13 +200,16 @@ export const usePrefectures = (props: UsePrefecturesProps): UsePrefectures => {
           ];
           setGraphData(data);
         }
+        setIsSetGraphData(true);
       }
+    } else {
+      setIsSetGraphData(true);
     }
   }, [response]);
 
   return {
     onChange,
-    isLoading,
+    isOperable,
     checkedId,
     onClickCategoryButton,
     currentCategoryIndex,
