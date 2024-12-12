@@ -1,7 +1,6 @@
 @use 'abstracts/index' as *;
 
 .container {
-  padding: 16px;
   position: relative;
 }
 
@@ -18,24 +17,31 @@
 }
 
 .categoryButton {
-  background-color: #000;
+  background-color: #48bff6;
   color: #fff;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   padding-bottom: 10px;
   padding-top: 10px;
   text-align: center;
+  transition: background-color 0.35s var(--ease-out-sine);
   width: 25%;
 
   &[data-is-selected='true'] {
-    opacity: 0.5;
+    background-color: #008ac9;
+    transition: background-color 0.35s var(--ease-in-sine);
+  }
+
+  @include hover {
+    background-color: #008ac9;
+    transition: background-color 0.35s var(--ease-in-sine);
   }
 }
 
 .checkBoxList {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  margin-top: 16px;
+  padding: 16px 8px;
   row-gap: 10px;
 }
 
