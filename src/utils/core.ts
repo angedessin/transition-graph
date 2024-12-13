@@ -43,5 +43,9 @@ export const sleep = (ms: number): Promise<number> =>
  * ランダムなカラーコードを取得
  */
 export const getColor = (): string => {
-  return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+  const ratio = 200;
+  const r: number = Math.floor(Math.random() * ratio);
+  const g: number = Math.floor(Math.random() * ratio);
+  const b: number = Math.floor(Math.random() * ratio);
+  return `rgb(${r},${g},${b})`;
 };
