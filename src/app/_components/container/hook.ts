@@ -19,6 +19,7 @@ export const useContainer = (): UseContainer => {
   const { response } = usePrefecturesList();
 
   // useState --------------------------------------------------
+  // コンテンツの表示準備ができたかどうか
   const [isReadyContents, setIsReadyContents] = useState<boolean>(false);
 
   // useMemo --------------------------------------------------
@@ -33,6 +34,8 @@ export const useContainer = (): UseContainer => {
     });
   }, [response]);
 
+  // useEffect --------------------------------------------------
+  // チェックボックスに表示する都道府県のデータが取得できたら、コンテンツの表示準備をする
   useEffect(() => {
     if (checkboxData.length > 0) {
       window.setTimeout(() => {

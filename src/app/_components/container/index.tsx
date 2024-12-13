@@ -1,4 +1,5 @@
 'use client';
+
 import { Graph } from '../graph';
 import { Prefectures } from '../prefectures';
 import { useContainer } from './hook';

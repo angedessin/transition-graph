@@ -40,8 +40,10 @@ export const usePrefectures = (props: UsePrefecturesProps): UsePrefectures => {
   const { response, setParams, isLoading } = usePopulationComposition();
 
   // useState --------------------------------------------------
+  // チェックされた都道府県のID
   const [checkedId, setCheckedId] = useState<number[]>([]);
 
+  // カテゴリーのインデックス
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState<number>(0);
   const currentCategoryRef = useRef<number>(currentCategoryIndex);
   currentCategoryRef.current = currentCategoryIndex;
@@ -54,18 +56,25 @@ export const usePrefectures = (props: UsePrefecturesProps): UsePrefectures => {
   >(populationCompositionLoadedData);
   populationCompositionLoadedDataRef.current = populationCompositionLoadedData;
 
+  // グラフデータが設定されているか
   const [isSetGraphData, setIsSetGraphData] = useState<boolean>(true);
 
   // useRef --------------------------------------------------
+  // チェックされた都道府県のラベル
   const currentLabelRef = useRef<string>('');
+  // チェックされた都道府県のコード
   const prefCodeRef = useRef<number>(-1);
 
   // useMemo --------------------------------------------------
+  // 操作可能か
   const isOperable = useMemo(() => {
     return !isLoading && isSetGraphData;
   }, [isLoading, isSetGraphData]);
 
   // useCallback --------------------------------------------------
+  /**
+   * カテゴリーボタンがクリックされた際の処理
+   */
   const onClickCategoryButton = useCallback(
     (event: MouseEvent<HTMLButtonElement>) => {
       if (!isOperable) {
@@ -83,6 +92,7 @@ export const usePrefectures = (props: UsePrefecturesProps): UsePrefectures => {
         (data) => code.includes(data.prefCode)
       );
 
+      // selectedDataに基づいてグラフデータを設定
       const data: GraphData[] = selectedData.map((populationData) => {
         const { label, prefCode, color, data } = populationData;
         const detail = data[index];
@@ -111,17 +121,21 @@ export const usePrefectures = (props: UsePrefecturesProps): UsePrefectures => {
       prefCodeRef.current = Number(target.id.replace('prefecture-', ''));
       currentLabelRef.current = target.name;
 
-      // populationCompositionLoadedDataRefにcurrentLabelRef.currentが存在するか
-      const isExist = populationCompositionLoadedDataRef.current.some(
-        (data) => data.label === currentLabelRef.current
-      );
-
       if (target.checked) {
+        // チェックボックスをチェック時
         setIsSetGraphData(false);
         setCheckedId([...checkedId, prefCodeRef.current]);
+
+        // populationCompositionLoadedDataRefにcurrentLabelRef.currentが存在するか
+        const isExist = populationCompositionLoadedDataRef.current.some(
+          (data) => data.label === currentLabelRef.current
+        );
+
         if (!isExist) {
+          // APIからデータを取得
           setParams({ prefCode: prefCodeRef.current });
         } else {
+          // 既にデータが読み込まれている場合はローカルからデータを取得
           const loadedData = populationCompositionLoadedDataRef.current
             .filter((loadedData) => loadedData.prefCode === prefCodeRef.current)
             .map((loadedData) => {
@@ -142,6 +156,7 @@ export const usePrefectures = (props: UsePrefecturesProps): UsePrefectures => {
           setIsSetGraphData(true);
         }
       } else {
+        // チェックボックスを解除時
         setCheckedId(checkedId.filter((id) => id !== prefCodeRef.current));
         const data = graphDataRef.current.filter(
           (data) => data.prefCode !== prefCodeRef.current
@@ -168,8 +183,10 @@ export const usePrefectures = (props: UsePrefecturesProps): UsePrefectures => {
         typeof workingAgePopulationData !== 'undefined' &&
         typeof elderlyPopulationData !== 'undefined'
       ) {
+        // prefCodeに基づいて色を取得
         const graphColor = colors[prefCodeRef.current - 1];
 
+        // stateに保存するためのデータ
         const loadedData = {
           label: currentLabelRef.current,
           prefCode: prefCodeRef.current,

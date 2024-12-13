@@ -12,7 +12,7 @@ import {
 
 import { useGraph } from '@/app/_components/graph/hook';
 
-import { AXIS_CONFIG, TOOLTIP_CONFIG } from './config';
+import { AXIS_CONFIG, GRAPH_LAYOUT, TOOLTIP_CONFIG } from './config';
 
 import type { UseGraph } from '@/app/_components/graph/hook';
 import type { GraphData } from '@global-states';
@@ -25,14 +25,9 @@ const Graph = () => {
     <div className={styles.container}>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
-          width={500}
-          height={300}
-          margin={{
-            top: 5,
-            right: 5,
-            left: 5,
-            bottom: 5,
-          }}
+          width={GRAPH_LAYOUT.width}
+          height={GRAPH_LAYOUT.height}
+          margin={GRAPH_LAYOUT.margin}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
