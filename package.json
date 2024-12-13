@@ -16,7 +16,7 @@
     "prepare": "rimraf .next && rimraf .config && husky",
     "predev": "rimraf .next",
     "dev": "next dev --experimental-https",
-    "build": "next build && next-image-export-optimizer",
+    "build": "pnpm test && next build && next-image-export-optimizer",
     "build:test": "next build",
     "analyze": "cross-env ANALYZE=true pnpm start",
     "start": "next build && next start -p 8888",
