@@ -14,8 +14,8 @@ import { useGraph } from '@/app/_components/graph/hook';
 
 import { AXIS_CONFIG, TOOLTIP_CONFIG } from './config';
 
-import type { PrefecturesData } from './type';
 import type { UseGraph } from '@/app/_components/graph/hook';
+import type { GraphData } from '@global-states';
 
 import styles from './styles.module.scss';
 
@@ -44,7 +44,7 @@ const Graph = () => {
           <YAxis dataKey="value" {...AXIS_CONFIG} />
           <Tooltip {...TOOLTIP_CONFIG} />
           <Legend />
-          {graphData.map((value: PrefecturesData) => {
+          {graphData.map((value: GraphData) => {
             const { label, color, detail } = value;
             return (
               <Line
