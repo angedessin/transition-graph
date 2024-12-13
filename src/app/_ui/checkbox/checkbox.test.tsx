@@ -4,7 +4,7 @@ import type { ChangeEvent } from 'react';
 
 import { Checkbox } from '.';
 
-test('チェックボックスのテスト', async (): Promise<void> => {
+test('チェックボックスのテスト', (): void => {
   render(
     <Checkbox
       key="1"
