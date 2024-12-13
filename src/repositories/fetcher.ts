@@ -8,20 +8,24 @@ import type {
   PrefecturesDataResponse,
 } from '@/repositories/type';
 
+export const PREFECTURES_API = '/api/v1/prefectures';
+export const POPULATION_COMPOSITION_API =
+  '/api/v1/population/composition/perYear';
+
 /**
  * API取得用のオブジェクト
  */
 export const Api = {
   prefectures(): PrefecturesDataResponse {
     const repository = getRepository({});
-    return repository.get<PrefecturesData>('/api/v1/prefectures');
+    return repository.get<PrefecturesData>(PREFECTURES_API);
   },
   populationComposition(
     params: PopulationCompositionParams
   ): PopulationCompositionResponse {
     const repository = getRepository({});
     return repository.get<PopulationCompositionData>(
-      '/api/v1/population/composition/perYear',
+      POPULATION_COMPOSITION_API,
       { params }
     );
   },
