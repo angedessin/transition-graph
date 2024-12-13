@@ -10,11 +10,10 @@ import {
   YAxis,
 } from 'recharts';
 
-import { useGraph } from '@/app/_components/graph/hook';
-
 import { AXIS_CONFIG, GRAPH_LAYOUT, TOOLTIP_CONFIG } from './config';
+import { useGraph } from './hook';
 
-import type { UseGraph } from '@/app/_components/graph/hook';
+import type { UseGraph } from './hook';
 import type { GraphData } from '@global-states';
 
 import styles from './styles.module.scss';
