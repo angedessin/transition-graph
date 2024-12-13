@@ -13,7 +13,7 @@ export type PrefecturesData = {
 
 // 都道府県詳細のAPIレスポンスデータ型
 export type PopulationCompositionResultData = {
-  rate: number;
+  rate?: number;
   value: number;
   year: number;
 };
