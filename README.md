@@ -1,5 +1,15 @@
 # transition-graph
 
+## :butterfly: Demo
+
++ https://transition-graph-test.vercel.app/
+
+## :crocodile: TODO
++ [x] 都道府県一覧の取得 
++ [x] 都道府県一覧のチェックボックスを動的
++ [x] 都道府県にチェックを入れるとAPI経由でデータを取得
++ [x] データを元にグラフを描画
+
 ## :four_leaf_clover:: Features
 ---
 + [Next.js](https://nextjs.org/)
@@ -10,6 +20,8 @@
 + [husky](https://github.com/typicode/husky)
 + [Prettier](https://prettier.io/)
 + [Storybook](https://storybook.js.org/)
+
+
 
 ## :dog: Requirements
 ------
